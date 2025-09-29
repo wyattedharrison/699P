@@ -36,14 +36,16 @@ _input_buf = ""                     # buffer holding recent key strokes in comma
 #              \     /
 # We want to     ---
 # find this point^^^ 
-def dip_smooth_min(x, y):
-    n = len(y)
-    if n == 0:
-        return float('nan'), float('nan')
-    # 3-point moving average (ends left as-is)
-    sm = [y[0]] + [(y[i-1] + y[i] + y[i+1]) / 3.0 for i in range(1, n-1)] + [y[-1]]
-    idx = min(range(n), key=lambda i: sm[i])
-    return x[idx], y[idx]
+def dip_smooth_min(x, y):                       # find the dip in data, like diagram above
+    n = len(y)                                  # get how many data points there are
+    if n == 0:                                  # if no points,
+        return float('nan'), float('nan')       # return nan values
+    sm = [y[0]] + [(y[i-1] + y[i] + y[i+1]) / 3.0 for i in range(1, n-1)] + [y[-1]]# replace y[i] with the average of it, 
+                                                                                   # and its 2 nearest neighbors
+    idx = min(range(n), key=lambda i: sm[i])    # find index with smallest value
+    return x[idx], y[idx]                       # return original x,y value with that index
+
+
 
 
 def safe_num(x, default=0.0):                   # function returns a safe float, defaulting to 0
@@ -205,3 +207,4 @@ def main():
                             
 if __name__ == "__main__":                                              # set this script as main so it runs properly
     main()                                                              # if name is main, run the script
+
