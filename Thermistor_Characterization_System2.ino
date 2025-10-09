@@ -92,17 +92,17 @@ void samplePlatter(){                         // samples all the various datapoi
 }
 
 void CalTemp(){
-double VRatio = thermaVolt / 3.3;                   // Ratio to Vcc needed for resistance calculation
-thermaRes = (VRatio * R1) / (1.0f - VRatio);        // Transfer function of divider
+double VRatio = thermaVolt / 3.3;                        // Ratio to Vcc needed for resistance calculation
+thermaRes = (VRatio * R1) / (1.0f - VRatio);             // Transfer function of divider
 
   //Steinhart-hart equation
-float logR = log(thermaRes);                            // simplifies next line
-float deno = A + (B * logR) + (C * logR * logR * logR); // Steinhart-hart equation
+float logR = log(thermaRes);                             // simplifies next line
+float deno = A + (B * logR) + (C * logR * logR * logR);  // Steinhart-hart equation
 kelvin = (1.0000f / deno);                               // 1/^^ completes the calculation
 
-celcius = kelvin - 273.15f;                             // convert to celcius
-farenheit = (celcius * 9.0f / 5.0f ) + 32.0f;           // convert to farenheit
-}                                                       // using "f" avoids truncation by declaring as float
+celcius = kelvin - 273.15f;                              // convert to celcius
+farenheit = (celcius * 9.0f / 5.0f ) + 32.0f;            // convert to farenheit
+}                                                        // using "f" avoids truncation by declaring as float
 
 void updateDisplay(){
   display.clearDisplay();                 // clear display
